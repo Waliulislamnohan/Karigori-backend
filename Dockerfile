@@ -1,7 +1,13 @@
-FROM eclipse-temurin:17-jdk-alpine
+# syntax=docker/dockerfile:1
+
+FROM eclipse-temurin:17-jdk-jammy
+
 WORKDIR /app
-COPY target/jobSite-0.0.1-SNAPSHOT.jar
-EXPOSE 8080
-CMD ["java","-jar","jobsite-0.0.1.SNAPSHOT.jar"]
 
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:resolve
 
+COPY src ./src
+
+CMD ["./mvnw", "spring-boot:run"]
