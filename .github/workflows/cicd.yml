@@ -1,4 +1,7 @@
-name: cicd
+Your YAML file appears to have a few issues with indentation and formatting, which are crucial for YAML syntax. Here's a revised version that should work better:
+
+  ```yaml
+name: CI/CD
 
 on:
   push:
