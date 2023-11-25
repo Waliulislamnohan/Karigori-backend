@@ -39,7 +39,7 @@ jobs:
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/karigori-backend:latest
 
       - name: Delete old container if exists
-        run: docker rm -f karigori-container || true
+        run: docker rm -f karigori-backend || true
 
       - name: Run Docker container
-        run: docker run -d -p 8080:8080 --name karigori-container ${{ secrets.DOCKER_USERNAME }}/karigori-backend:latest
+        run: docker run -d -p 8080:8080 --name karigori-backend ${{ secrets.DOCKER_USERNAME }}/karigori-backend:latest
