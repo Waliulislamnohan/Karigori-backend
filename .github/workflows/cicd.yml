@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     needs: build-and-push
-    runs-on: karigori-ec2
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v2
