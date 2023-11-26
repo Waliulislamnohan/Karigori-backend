@@ -31,6 +31,6 @@ jobs:
       - name: Pull Image from docker hub
         run: docker pull nohan/karigoriV4:latest
       - name: Delete old container
-        run: docker rm -f springboot-example-container
+        run: docker rm -f nohan/karigoriV4-container
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name nohan/karigoriV4-container nohan/karigoriV4
