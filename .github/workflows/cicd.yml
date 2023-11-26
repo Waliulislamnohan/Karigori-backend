@@ -20,17 +20,17 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t nohan/karigoriV4 .
+        run: docker build -t nohan/karigoriv4 .
       - name: Publish image to docker hub
-        run: docker push nohan/karigoriV4:latest
+        run: docker push nohan/karigoriv4:latest
 
   deploy:
     needs: build
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: docker pull nohan/karigoriV4:latest
+        run: docker pull nohan/karigoriv4:latest
       - name: Delete old container
-        run: docker rm -f nohan/karigoriV4-container
+        run: docker rm -f nohan/karigoriv4-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name nohan/karigoriV4-container nohan/karigoriV4
+        run: docker run -d -p 8080:8080 --name nohan/karigoriv4-container nohan/karigoriv4
