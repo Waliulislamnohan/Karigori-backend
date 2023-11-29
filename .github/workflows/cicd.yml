@@ -20,9 +20,9 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t waliulislamnohan/karigoriv4 .
+        run: docker build -t waliulislamnohan/karigoriv5 .
       - name: Publish image to docker hub
-        run: docker push waliulislamnohan/karigoriv4:latest
+        run: docker push waliulislamnohan/karigoriv5:latest
 
   deploy:
     needs: build
@@ -31,6 +31,6 @@ jobs:
       - name: Pull Image from docker hub
         run: docker pull waliulislamnohan/karigoriv4:latest
       - name: Delete old container
-        run: docker rm -f karigoriv4-container
+        run: docker rm -f karigoriv5-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name karigoriv4-container waliulislamnohan/karigoriv4
+        run: docker run -d -p 8080:8080 --name karigoriv5-container waliulislamnohan/karigoriv5
