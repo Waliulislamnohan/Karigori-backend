@@ -28,13 +28,10 @@ jobs:
     needs: build
     runs-on: [aws-ec2]
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          dockerfile: Dockerfile
       - name: Pull Image from docker hub
         run: docker pull waliulislamnohan/karigoriv5:latest
       - name: Delete old container
