@@ -1,4 +1,4 @@
-name: CICD
+name: CI/CD
 
 on:
   push:
@@ -6,31 +6,41 @@ on:
 
 jobs:
   build:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
+
+      - name: Setup Docker
+        uses: docker/setup-docker@v2
+
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
           java-version: '17'
+
       - name: Build Project
         run: mvn clean install -DskipTests
-      - name: Login to docker hub
+
+      - name: Login to Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-      - name: Build docker image
+
+      - name: Build Docker image
         run: docker build -t waliulislamnohan/karigoriv5 .
-      - name: Publish image to docker hub
+
+      - name: Publish image to Docker Hub
         run: docker push waliulislamnohan/karigoriv5:latest
 
   deploy:
     needs: build
-    runs-on: [aws-ec2]
+    runs-on: aws-ec2
     steps:
-      - name: Pull Image from docker hub
-        run: docker pull waliulislamnohan/karigoriv4:latest
+      - name: Pull Image from Docker Hub
+        run: docker pull waliulislamnohan/karigoriv5:latest
+
       - name: Delete old container
-        run: docker rm -f karigoriv5-container
-      - name: Run docker container
+        run: docker rm -f karigoriv5-container || true
+
+      - name: Run Docker container
         run: docker run -d -p 8080:8080 --name karigoriv5-container waliulislamnohan/karigoriv5
